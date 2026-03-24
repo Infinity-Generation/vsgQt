@@ -153,13 +153,15 @@ KeyboardMap::KeyboardMap() :
         //            {VK_RSHIFT, KEY_Shift_R},     /* Right shift */
         //            {VK_LCONTROL, KEY_Control_L}, /* Left control */
         {Qt::Key_Control, vsg::KEY_Control_R}, /* Right control */
-        {Qt::Key_CapsLock, vsg::KEY_Caps_Lock} /* Caps lock */
+        {Qt::Key_CapsLock, vsg::KEY_Caps_Lock}, /* Caps lock */
         //KEY_Shift_Lock = 0xFFE6, /* Shift lock */
-
         //KEY_Meta_L = 0xFFE7,  /* Left meta */
         //KEY_Meta_R = 0xFFE8,  /* Right meta */
-        //            {VK_LMENU, KEY_Alt_L},  /* Left alt */
-        //            {VK_RMENU, KEY_Alt_R},  /* Right alt */
+        {Qt::Key_Alt, vsg::KEY_Alt_L},  /* Left alt */
+        {Qt::Key_AltGr, vsg::KEY_Alt_R},  /* Right alt */
+#ifdef __APPLE__
+        {Qt::Key_Meta, vsg::KEY_Meta_L}, /* Physical Control key on macOS */
+#endif
         //            {VK_LWIN, KEY_Super_L}, /* Left super */
         //            {VK_RWIN, KEY_Super_R}  /* Right super */
         //KEY_Hyper_L = 0xFFED, /* Left hyper */
