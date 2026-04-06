@@ -310,8 +310,17 @@ void Window::wheelEvent(QWheelEvent* e)
 {
     if (!windowAdapter) return;
 
+    // angleDelta() returns units of 1/8 degree.  One standard mouse-wheel
+    // notch = 120 units.  Dividing by 120 normalises to "lines": discrete
+    // mice produce +/- 1.0, high-resolution mice and trackpads produce
+    // proportional fractional values.  This matches the convention used by
+    // ImGui, GLFW, and SDL backends.
+    QPoint ad = e->angleDelta();
+    float dx = static_cast<float>(ad.x()) / 120.0f;
+    float dy = static_cast<float>(ad.y()) / 120.0f;
+
     vsg::clock::time_point event_time = vsg::clock::now();
-    windowAdapter->bufferedEvents.push_back(vsg::ScrollWheelEvent::create(windowAdapter, event_time, e->angleDelta().y() < 0 ? vsg::vec3(0.0f, -1.0f, 0.0f) : vsg::vec3(0.0f, 1.0f, 0.0f)));
+    windowAdapter->bufferedEvents.push_back(vsg::ScrollWheelEvent::create(windowAdapter, event_time, vsg::vec3(dx, dy, 0.0f)));
 
     if (viewer) viewer->request();
 }
